@@ -43,6 +43,7 @@
     la = !git l --all
 	unstage = reset HEAD --
 	last = log -1 HEAD
+	alias = config --get-regexp ^alias\\.
 
 [merge]
     tool = vimdiff
