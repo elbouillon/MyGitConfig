@@ -1,43 +1,58 @@
 [user]
 	name = Mickael Kurmann
 	email = elbouillon@gmail.com
+[color]
+    ui = auto
 [alias]
-    # Aliases mostly taken from http://pioupioum.fr/developpement/git-alias-productivite.html
-    #
-    # Éditer le dernier commit
-    amend = commit --amend
-
     st = status
-    who = shortlog -sne
-
-    # Afficher un historique condensé des commits
-    oneline = log --pretty=oneline --abbrev-commit --graph
-
-    # Faire le point rapidement
-    changes = diff --name-status
-    dic = diff --cached
-    diffstat = diff --stat
-
-    svnpull = svn rebase
-    svnpush = svn dcommit
-
-    # Afficher les changements réalisés depuis le dernier pull
-    lc = !git oneline ORIG_HEAD.. --stat --no-merges
-
-    # Afficher les changements réalisés depuis le dernier pull
-    addm = !git-ls-files -m -z | xargs -0 git-add && git status
-
-    # Afficher les changements réalisés depuis le dernier pull
-    addu = !git-ls-files -o --exclude-standard -z | xargs -0 git-add && git status
-
-    # Afficher les changements réalisés depuis le dernier pull
-    rmm = !git ls-files -d -z | xargs -0 git-rm && git status
-
-    vim = !git-ls-files -m -z | xargs -0 vim
-    vimall = !git-ls-files -m -o --exclude-standard -z | xargs -0 vim
-    undo = git reset --soft HEAD^
-    st = status
-    df = diff
-    co = checkout
     ci = commit
-    br = branch
+    co = checkout
+    di = diff
+    dc = diff --cached
+    amend = commit --amend
+    aa = add --all
+    ff = merge --ff-only
+    pullff = pull --ff-only
+    noff = merge --no-ff
+    fa = fetch --all
+    pom = push origin master
+    b = branch
+    ds = diff --stat=160,120
+    dh1 = diff HEAD~1
+
+    # Divergence (commits we added and commits remote added)
+    div = divergence
+
+    # Goodness (summary of diff lines added/removed/total)
+    gn = goodness
+    gnc = goodness --cached
+
+    # Fancy logging.
+    #   h = head
+    #   hp = head with patch
+    #   r = recent commits, only current branch
+    #   ra = recent commits, all reachable refs
+    #   l = all commits, only current branch
+    #   la = all commits, all reachable refs
+    head = !git l -1
+    h = !git head
+    hp = "!. ~/.githelpers && show_git_head"
+    r = !git l -30
+    ra = !git r --all
+    l = "!. ~/.githelpers && pretty_git_log"
+    la = !git l --all
+	unstage = reset HEAD --
+	last = log -1 HEAD
+
+[merge]
+    tool = vimdiff
+[push]
+	default = simple
+[core]
+	excludesfile = /Users/mkurmann/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
